@@ -19,11 +19,6 @@ textarea {
 	color: black;
 	border-radius: 0;
 	border-bottom: 10px solid black;
-	padding-bottom: 15px;
-}
-
-#currentDay {
-	font-size: small;
 }
 
 .description {
@@ -49,17 +44,17 @@ textarea {
 
 .past {
 	background-color: #d3d3d3;
-	color: black;
+	color: white;
 }
 
 .present {
 	background-color: #ff6961;
-	color: black;
+	color: white;
 }
 
 .future {
 	background-color: #77dd77;
-	color: black;
+	color: white;
 }
 
 .saveBtn {

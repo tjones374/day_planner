@@ -14,7 +14,6 @@ $(document).ready(function() {
 	function hourUpdate() {
 		var currentHour = moment().hours();
 
-		//for each loop
 		$('.time-block').each(function() {
 			var blockHour = parseInt(
 				$(this)
@@ -36,7 +35,7 @@ $(document).ready(function() {
 	}
 	hourUpdate();
 
-	var interval = setInterval(hourUpdate, 15000);
+	var setInterval = setInterval(hourUpdate, 15000);
 
 	$('#9AM .description').val(localStorage.getItem('9AM'));
 	$('#10AM .description').val(localStorage.getItem('10AM'));
