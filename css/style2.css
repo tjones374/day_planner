@@ -2,11 +2,7 @@ body {
 	font-family: 'Open Sans', sans-serif;
 	font-size: 16px;
 	line-height: 1;
-}
-
-.table td {
-	padding: 0px;
-	vertical-align: middle;
+	/* background-image: url('./assets/images/pink-blue-pawel-czerwinski.jpg'); */
 }
 
 textarea {
@@ -16,9 +12,6 @@ textarea {
 	color: #000000;
 	border-left: 1px solid black;
 	padding: 10px;
-	margin: 0px;
-	width: -webkit-fill-available;
-	height: -webkit-fill-available;
 }
 
 .jumbotron {
@@ -38,7 +31,7 @@ textarea {
 	border-radius: 15px;
 }
 
-tr {
+.row {
 	white-space: pre-wrap;
 	height: 80px;
 	border-top: 1px solid white;
@@ -74,6 +67,6 @@ tr {
 }
 
 .saveBtn i:hover {
-	/* font-size: 20px; */
+	font-size: 20px;
 	transition: all 0.3s ease-in-out;
 }
