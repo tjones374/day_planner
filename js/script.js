@@ -1,51 +1,98 @@
 $(document).ready(function() {
-	$('.saveBtn').on('click', function() {
-		var value = $(this)
-			.siblings('.description')
-			.val();
+	var currentDate = moment().format('MMMM D, YYYY<br>h:mm a');
+	var currentTime = moment().format('HH');
 
-		var time = $(this)
-			.parent()
-			.attr('id');
+	var clockArr24 = [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
+	var clockArr = [9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7];
+	var numArr = [
+		'nine',
+		'ten',
+		'eleven',
+		'twelve',
+		'one',
+		'two',
+		'three',
+		'four',
+		'five',
+		'six',
+		'seven'
+	];
 
-		localStorage.setItem(time, value);
+	$('#today').append(currentDate);
+
+	for (var i = 0; i < clockArr.length; i++) {
+		var newRow = $('<row>');
+		$('.container').append(newRow);
+		var newCol1 = $('<col>');
+		var newCol2 = $('<col>');
+		newRow.append(newCol1, newCol2);
+		newCol1.attr('class', 'col-2 hour');
+		newCol2.attr('class', 'col-9 input');
+		newCol2.attr('id', numArr[i]);
+		newCol2.html(
+			"<textarea rows='3'style='width: 100%; margin-left:-2rem; height: 100%'></textarea>"
+		);
+		newRow.addClass('time-block row');
+		newRow.attr('id', clockArr24[i]);
+		var newButt = $('<button>');
+		newButt.attr('id', clockArr[i]);
+		newButt.attr('class', 'saveBtn fas fa-save col-1');
+		newRow.append(newButt);
+		if (clockArr[i] === 12) {
+			newCol1.text(clockArr[i] + 'PM');
+		} else if (clockArr[i] > 8) {
+			newCol1.text(clockArr[i] + 'AM');
+		} else {
+			newCol1.text(clockArr[i] + 'PM');
+		}
+	}
+
+	$('row').each(function() {
+		var getId = parseInt($(this).attr('id'));
+		console.log('id= ' + getId);
+
+		if (parseInt(currentTime) < 9 || parseInt(currentTime) > 19) {
+			$(this).addClass('past');
+		}
+		if (getId < parseInt(currentTime)) {
+			$(this).addClass('past');
+		}
+		if (getId > parseInt(currentTime)) {
+			$(this).addClass('future');
+		}
+		if (getId === parseInt(currentTime)) {
+			$(this).addClass('present');
+		}
 	});
 
-	function hourUpdate() {
-		var currentHour = moment().hours();
+	var saveBtn = $('.saveBtn');
+	saveBtn.on('click', function(event) {
+		event.preventDefault();
+		console.log($(this).attr('id'));
+		console.log(
+			$(this)
+				.siblings('.input')
+				.children('textarea')
+		);
+		console.log(
+			$(this)
+				.siblings('.input')
+				.children('textarea')
+				.val()
+		);
 
-		$('.time-block').each(function() {
-			var blockHour = parseInt(
-				$(this)
-					.attr('id')
-					.split('-')[0]
-			);
+		var hour = $(this).attr('id');
+		var note = $(this)
+			.siblings('.input')
+			.children('textarea')
+			.val();
 
-			if (blockHour < currentHour) {
-				$(this).addClass('past');
-			} else if (blockHour === currentHour) {
-				$(this).removeClass('past');
-				$(this).addClass('present');
-			} else {
-				$(this).removeClass('past');
-				$(this).removeClass('present');
-				$(this).addClass('future');
-			}
-		});
+		localStorage.setItem(hour, note);
+	});
+
+	for (let i = 0; i < clockArr.length; i++) {
+		$('#' + numArr[i])
+			.children('textarea')
+			.text(localStorage.getItem(clockArr[i]));
 	}
-	hourUpdate();
-
-	var setInterval = setInterval(hourUpdate, 15000);
-
-	$('#9AM .description').val(localStorage.getItem('9AM'));
-	$('#10AM .description').val(localStorage.getItem('10AM'));
-	$('#11AM .description').val(localStorage.getItem('11AM'));
-	$('#12PM .description').val(localStorage.getItem('12PM'));
-	$('#13PM .description').val(localStorage.getItem('13PM'));
-	$('#14PM .description').val(localStorage.getItem('14PM'));
-	$('#15PM .description').val(localStorage.getItem('15PM'));
-	$('#16PM .description').val(localStorage.getItem('16PM'));
-	$('#17PM .description').val(localStorage.getItem('17PM'));
-
-	$('#currentDay').text(moment().format('MMMM Do YYYY, h:mm:ss a'));
 });
